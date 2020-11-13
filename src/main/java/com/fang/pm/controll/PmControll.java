@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * 包管理的控制代码
@@ -63,6 +66,13 @@ public class PmControll {
         File file = new File(projectPath + project);
 
         if (file.exists() && file.isDirectory()) {
+
+            File[] childFile = file.listFiles();
+
+            if (childFile != null) {
+                Arrays.sort(childFile, (one, two) -> (int) (two.lastModified() - one.lastModified()));
+            }
+
             return new Result(200, "success", file.list(), 1);
         } else {
             return new Result(200, "失败", null, 0);
