@@ -21,6 +21,8 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -72,8 +74,8 @@ public class PmControll {
             if (childFile != null) {
                 Arrays.sort(childFile, (one, two) -> (int) (two.lastModified() - one.lastModified()));
             }
-
-            return new Result(200, "success", file.list(), 1);
+            List<String> files = Arrays.asList(childFile).stream().map(file1 -> file1.getName()).collect(Collectors.toList());
+            return new Result(200, "success", files, 1);
         } else {
             return new Result(200, "失败", null, 0);
         }
