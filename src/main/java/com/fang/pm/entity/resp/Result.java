@@ -1,4 +1,4 @@
-package com.fang.pm.entity;
+package com.fang.pm.entity.resp;
 
 
 public class Result {

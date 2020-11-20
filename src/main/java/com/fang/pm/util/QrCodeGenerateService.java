@@ -1,4 +1,4 @@
-package com.fang.pm.service;
+package com.fang.pm.util;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;

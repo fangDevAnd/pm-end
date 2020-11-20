@@ -1,10 +1,9 @@
 package com.fang.pm.controll;
 
 
-import com.fang.pm.entity.Result;
-import com.fang.pm.service.QrCodeGenerateService;
+import com.fang.pm.entity.resp.Result;
+import com.fang.pm.util.QrCodeGenerateService;
 import com.google.zxing.WriterException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,16 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -103,6 +98,7 @@ public class PmControll {
 
         String filename = projectPath + path;
 
+
         File file = new File(filename);
         if (file.exists() && file.isFile()) {
 
@@ -112,7 +108,9 @@ public class PmControll {
                 response.setHeader("content-type", "application/octet-stream");
                 response.setContentType("application/octet-stream");
                 // 下载文件能正常显示中文
-                response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
+                response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(path, "UTF-8"));
+
+                response.addHeader("Content-Length", "" + file.length());
                 // 实现文件下载
                 byte[] buffer = new byte[1024];
                 FileInputStream fis = null;

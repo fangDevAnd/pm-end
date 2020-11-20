@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.pm.dao.ProjectDao">
+
+
+    <sql id="pageSql">
+        <if test="page!=null&amp;&amp;size!=null">
+            <if test="page!=-1&amp;&amp;size!=-1">
+                limit #{page}, #{size}
+            </if>
+        </if>
+    </sql>
+
+
+    <sql id="CommonCol">
+        proName,mainUrl,isDel,descri,createTime,engName
+    </sql>
+
+
+    <!--    public List<ProjectReqResp> getAll(@Param("param") ProjectReqResp reqResp);-->
+
+    <select id="getAll" resultType="ProjectReqResp" parameterType="ProjectReqResp">
+
+        select
+        <include refid="CommonCol"/>
+        from project
+        <where>
+            isDel=0
+            <if test="proName!=null">
+                and proName=#{proName}
+            </if>
+            <if test="mainUrl!=null">
+                and mainUrl=#{mainUrl}
+            </if>
+        </where>
+        <include refid="pageSql"/>
+
+    </select>
+
+
+    <!--    public int update(@Param("param") ProjectReqResp reqResp);-->
+    <update id="update" parameterType="ProjectReqResp">
+        UPDATE project
+        <set>
+            <if test="proName != null">
+                proName=#{proName},
+            </if>
+            <if test="mainUrl != null">
+                mainUrl = #{mainUrl},
+            </if>
+            <if test="isDel != null">
+                isDel=#{isDel},
+            </if>
+        </set>
+        where proName = #{proName}
+    </update>
+
+
+    <!--    public int add(@Param("param") ProjectReqResp reqResp);-->
+    <insert id="add" parameterType="ProjectReqResp">
+        insert into project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="proName != null">
+                proName,
+            </if>
+            <if test="mainUrl != null">
+                mainUrl,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="proName != null">
+                #{proName},
+            </if>
+            <if test="mainUrl != null">
+                #{mainUrl},
+            </if>
+        </trim>
+    </insert>
+
+
+    <select id="count" resultType="int" parameterType="ProjectReqResp">
+        select
+        count(*)
+        from project
+        <where>
+            isDel=0
+            <if test="proName!=null">
+                and proName=#{proName}
+            </if>
+            <if test="mainUrl!=null">
+                and mainUrl=#{mainUrl}
+            </if>
+        </where>
+
+    </select>
+
+
+</mapper>
