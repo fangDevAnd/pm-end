@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.pm.dao.LogcatDao">
+
+
+    <sql id="pageSql">
+        <if test="page!=null&amp;&amp;size!=null">
+            <if test="page!=-1&amp;&amp;size!=-1">
+                limit #{page}, #{size}
+            </if>
+        </if>
+    </sql>
+
+
+    <sql id="CommonCol">
+        project,imei,
+       additionNumber,
+       createTime,
+       level,
+       info,
+       tag,
+       phone,
+       version,
+       brand
+    </sql>
+
+
+    <sql id="CommonWhere">
+        <where>
+            <if test="project != null">
+                and project= #{project}
+            </if>
+            <if test="imei != null">
+                and imei=#{imei}
+            </if>
+            <if test="additionNumber != null">
+                and additionNumber=#{additionNumber}
+            </if>
+            <if test="createTime != null">
+                and createTime=#{createTime}
+            </if>
+            <if test="level != null">
+                and level=#{level}
+            </if>
+            <if test="info != null">
+                and info=#{info}
+            </if>
+            <if test="tag != null">
+                and tag=#{tag}
+            </if>
+            <if test="phone != null">
+                and phone= #{phone}
+            </if>
+            <if test="version != null">
+                and version=#{version}
+            </if>
+            <if test="brand != null">
+                and brand=#{brand}
+            </if>
+            <if test="startTime!=null">
+                and createTime >= startTime
+            </if>
+            <if test="endTime!=null">
+                and createTime &lt;= endTime
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="all" resultType="Logcat" parameterType="Logcat">
+
+        select
+        <include refid="CommonCol"/>
+        from logcat
+        <include refid="CommonWhere"/>
+        <include refid="pageSql"/>
+
+    </select>
+
+
+    <update id="update" parameterType="Logcat">
+        UPDATE project
+        <set>
+            <if test="proName != null">
+                proName=#{proName},
+            </if>
+            <if test="mainUrl != null">
+                mainUrl = #{mainUrl},
+            </if>
+            <if test="isDel != null">
+                isDel=#{isDel},
+            </if>
+        </set>
+        where proName = #{proName}
+    </update>
+
+    <!--    public int add(@Param("param") ProjectReqResp reqResp);-->
+    <insert id="add" parameterType="Logcat">
+        insert into logcat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="project != null">
+                project,
+            </if>
+            <if test="imei != null">
+                imei,
+            </if>
+            <if test="additionNumber != null">
+                additionNumber,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+            <if test="tag != null">
+                tag,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="brand != null">
+                brand,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="project != null">
+                #{project},
+            </if>
+            <if test="imei != null">
+                #{imei},
+            </if>
+            <if test="additionNumber != null">
+                #{additionNumber},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="level != null">
+                #{level},
+            </if>
+            <if test="info != null">
+                #{info},
+            </if>
+            <if test="tag != null">
+                #{tag},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="version != null">
+                #{version},
+            </if>
+            <if test="brand != null">
+                #{brand},
+            </if>
+
+
+        </trim>
+    </insert>
+
+    <select id="count" resultType="int" parameterType="Logcat">
+        select
+        count(*)
+        from logcat
+        <include refid="CommonWhere"/>
+
+    </select>
+
+
+</mapper>

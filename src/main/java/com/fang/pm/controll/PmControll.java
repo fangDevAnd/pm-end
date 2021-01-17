@@ -67,8 +67,9 @@ public class PmControll {
             File[] childFile = file.listFiles();
 
             if (childFile != null) {
-                Arrays.sort(childFile, (one, two) -> (int) (two.lastModified() - one.lastModified()));
+                Arrays.sort(childFile, (one, two) -> (two.getName().compareTo(one.getName())));
             }
+
             List<String> files = Arrays.asList(childFile).stream().map(file1 -> file1.getName()).collect(Collectors.toList());
             return new Result(200, "success", files, 1);
         } else {
