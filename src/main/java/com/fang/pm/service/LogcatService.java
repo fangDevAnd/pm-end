@@ -2,6 +2,7 @@ package com.fang.pm.service;
 
 import com.fang.pm.entity.request.LimitRequest;
 import com.fang.pm.entity.request.real.Logcat;
+import com.fang.pm.entity.resp.Result;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface LogcatService {
 
     int count(Logcat request);
 
-
+    Result selectOption();
 }

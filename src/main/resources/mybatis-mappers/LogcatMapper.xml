@@ -60,10 +60,10 @@
                 and brand=#{brand}
             </if>
             <if test="startTime!=null">
-                and createTime >= startTime
+                and createTime >= #{startTime}
             </if>
             <if test="endTime!=null">
-                and createTime &lt;= endTime
+                and createTime &lt;= #{endTime}
             </if>
         </where>
     </sql>

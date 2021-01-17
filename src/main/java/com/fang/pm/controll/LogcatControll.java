@@ -32,14 +32,17 @@ public class LogcatControll {
      * @return
      */
     @RequestMapping("/list")
-    public LimitResp list(Logcat logcat) {
+    public LimitResp list(@RequestBody Logcat logcat) {
         logcat.getLimitAndOffset();
         int count = logcatService.count(logcat);
         List<Logcat> list = logcatService.all(logcat);
         return new LimitResp(count, list);
     }
 
-
+    @RequestMapping("/option")
+    public Result option() {
+        return logcatService.selectOption();
+    }
 
 
 }
