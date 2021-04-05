@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.pm.sub.crm.mapper.CrmMenuMapper">
+
+
+    <sql id="pageSql">
+        <if test="page!=null&amp;&amp;size!=null">
+            <if test="page!=-1&amp;&amp;size!=-1">
+                limit #{page}, #{size}
+            </if>
+        </if>
+    </sql>
+
+
+    <sql id="CommonCol">
+        id,menuName,pid,
+        url
+    </sql>
+
+    <sql id="CommonWhere">
+        <where>
+            <if test="id != null">
+                and id= #{id}
+            </if>
+            <if test="menuName != null">
+                and menuName=#{menuName}
+            </if>
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+            <if test="url != null">
+                and url=#{url}
+            </if>
+            <if test="ids!=null">
+                and id in
+                <foreach collection="ids" index="index" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <update id="update" parameterType="com.fang.pm.sub.crm.Bean.CrmMenu">
+        UPDATE crm_menu
+        <set>
+            <if test="id != null">
+                id=#{id},
+            </if>
+            <if test="menuName != null">
+                menuName = #{menuName},
+            </if>
+            <if test="pid != null">
+                pid=#{pid},
+            </if>
+            <if test="url != null">
+                url=#{url},
+            </if>
+        </set>
+        where proName = #{proName}
+    </update>
+
+    <insert id="insert" parameterType="com.fang.pm.sub.crm.Bean.CrmMenu">
+        insert into crm_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="obj.id != null">
+                id,
+            </if>
+            <if test="obj.menuName != null">
+                menuName,
+            </if>
+            <if test="obj.pid != null">
+                pid,
+            </if>
+            <if test="obj.url != null">
+                url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="obj.id != null">
+                #{obj.id},
+            </if>
+            <if test="obj.menuName != null">
+                #{obj.menuName},
+            </if>
+            <if test="obj.pid != null">
+                #{obj.pid},
+            </if>
+            <if test="obj.url != null">
+                #{obj.url},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="count" resultType="int" parameterType="com.fang.pm.sub.crm.Bean.CrmMenu">
+        select
+        count(*)
+        from crm_menu
+        <include refid="CommonWhere"/>
+
+    </select>
+
+    <delete id="del" parameterType="com.fang.pm.sub.crm.Bean.CrmMenu">
+        delete
+        from crm_menu
+        <include refid="CommonWhere"/>
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fang.pm.sub.upload.mapper.UploadFileMapper">
+
+    <insert id="insert" parameterType="com.fang.pm.sub.upload.bean.Upload" useGeneratedKeys="true">
+        insert into upload_file (urls) values (#{urls})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+</mapper>
