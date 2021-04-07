@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//import com.fang.pm.sub.base.base.Result;
 
 /**
  * 这个实现的功能是 测试项目的
@@ -51,7 +50,6 @@ public class CheckReportController {
             projectNames = getWorkSpaceName(dependencyCheckProperties.getFileRootPath());
         }
         beforeScanTime = System.currentTimeMillis();
-
 
         return new Result().setCode(200).setData(projectNames);
     }

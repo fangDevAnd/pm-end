@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
@@ -32,12 +33,8 @@ public class PmControll {
     @Value("${project.projectPath}")
     String projectPath;
 
-    @Value("${project.rootUrl}")
-    String rootPath;
-
     @Value("${server.port}")
     String port;
-
 
     /**
      * 列出当前的项目
@@ -45,7 +42,7 @@ public class PmControll {
      * @return
      */
     @RequestMapping("/list/dir")
-    public Result listProject() throws Exception {
+    public Result listProject(HttpServletRequest request) throws Exception {
 
         File file = new File(projectPath);
 
@@ -83,8 +80,8 @@ public class PmControll {
      * 该生成的 url 直接走 nginx
      */
     @GetMapping(value = "/qrimage")
-    public ResponseEntity<byte[]> getQRImage(String url) throws IOException, WriterException {
-        String urlReal = rootPath + ":" + port + "/pm/file/down?path=" + url;
+    public ResponseEntity<byte[]> getQRImage(String url, HttpServletRequest request) throws IOException, WriterException {
+        String urlReal = "http://" + request.getServerName() + ":" + port + "/pm/file/down?path=" + url;
         //二维码内的信息
         byte[] qrcode = null;
         qrcode = QrCodeGenerateService.getQRCodeImage(urlReal, 360, 360);

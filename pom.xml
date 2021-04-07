@@ -12,6 +12,8 @@
     <artifactId>pm</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>pm</name>
+    <packaging>pom</packaging>
+
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -52,10 +54,7 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
+
         <!--
          二维码生成
         -->
@@ -71,7 +70,6 @@
             <version>3.3.0</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -83,6 +81,7 @@
             <scope>test</scope>
         </dependency>
 
+
         <dependency>
             <groupId>com.fang.pm.sub</groupId>
             <artifactId>base</artifactId>
@@ -90,43 +89,33 @@
             <scope>compile</scope>
         </dependency>
 
+        <!--jwt认证-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+        <!-- kaptcha验证码 -->
+        <dependency>
+            <groupId>com.github.axet</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>0.0.9</version>
+        </dependency>
+
+        <!--mysql连接-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
         <!--
-        配置项目依赖关系
-       -->
+        spring相关依赖
+        -->
         <dependency>
-            <groupId>com.fang.pm.sub</groupId>
-            <artifactId>exception</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.fang.pm.sub</groupId>
-            <artifactId>mail</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fang.pm.sub</groupId>
-            <artifactId>crm</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fang.pm.sub</groupId>
-            <artifactId>upload</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fang.pm.sub</groupId>
-            <artifactId>security</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
 
     </dependencies>
 
@@ -137,6 +126,7 @@
         <module>service-upload</module>
         <module>service-crm</module>
         <module>service-mail</module>
+        <module>service-pm</module>
     </modules>
 
     <build>
@@ -150,28 +140,35 @@
                 2. 大家不要把这个插件放到父项目的依赖中，哪个项目需要打包，就放到哪个项目的依赖下
                     -->
                     <mainClass>com.fang.pm.PmApplication</mainClass>
+                    <!--
+                    使用当前的配置才能构建一个可以相互依赖的mvn工程
+                    -->
+                    <classifier>exec</classifier>
                 </configuration>
             </plugin>
 
             <!--
              maven 构建 Docker镜像
             -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.13</version>
+                <configuration>
+                    <imageName>${project.groupId}/${project.artifactId}:${project.version}</imageName>
+                    <dockerDirectory>${project.build.outputDirectory}</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
 
-            <!--            <plugin>-->
-            <!--                <groupId>com.spotify</groupId>-->
-            <!--                <artifactId>docker-maven-plugin</artifactId>-->
-            <!--                <version>0.4.13</version>-->
-            <!--                <configuration>-->
-            <!--                    <imageName>${project.groupId}/${project.artifactId}:${project.version}</imageName>-->
-            <!--                    <dockerDirectory>${project.build.outputDirectory}</dockerDirectory>-->
-            <!--                    <resources>-->
-            <!--                        <resource>-->
-            <!--                            <directory>${project.build.directory}</directory>-->
-            <!--                            <include>${project.build.finalName}.jar</include>-->
-            <!--                        </resource>-->
-            <!--                    </resources>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
+            <!--
+             tomcat插件
+            -->
 
 
         </plugins>
