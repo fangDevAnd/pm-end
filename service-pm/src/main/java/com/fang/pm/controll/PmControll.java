@@ -3,8 +3,10 @@ package com.fang.pm.controll;
 
 import com.fang.pm.entity.resp.Result;
 import com.fang.pm.sub.base.base.ResponseUtils;
+import com.fang.pm.sub.base.base.security.SecurityPathIgnore;
 import com.fang.pm.util.QrCodeGenerateService;
 import com.google.zxing.WriterException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,6 +38,13 @@ public class PmControll {
     @Value("${server.port}")
     String port;
 
+    @Autowired
+    public void setIgnore(SecurityPathIgnore ignore) {
+        this.ignore = ignore;
+    }
+
+    private SecurityPathIgnore ignore;
+
     /**
      * 列出当前的项目
      *
@@ -43,6 +52,7 @@ public class PmControll {
      */
     @RequestMapping("/list/dir")
     public Result listProject(HttpServletRequest request) throws Exception {
+        System.out.println(ignore);
 
         File file = new File(projectPath);
 

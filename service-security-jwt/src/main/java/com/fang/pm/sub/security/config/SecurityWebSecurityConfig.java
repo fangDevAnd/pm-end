@@ -2,6 +2,7 @@ package com.fang.pm.sub.security.config;
 
 import com.fang.pm.sub.base.base.ResponseUtils;
 import com.fang.pm.sub.base.base.Result;
+import com.fang.pm.sub.base.base.security.SecurityPathIgnore;
 import com.fang.pm.sub.security.filter.JwtAuthenticationFilter;
 
 import com.fang.pm.sub.security.tools.JwtTokenUtils;
@@ -30,6 +31,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Spring Security配置
@@ -54,18 +56,27 @@ public class SecurityWebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(new JwtAuthenticationProvider(userDetailsService));
     }
 
+
+    @Autowired
+    List<SecurityPathIgnore> ignoresPath;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        ignoresPath.forEach(securityPathIgnore -> {
+            try {
+                http.authorizeRequests().antMatchers(securityPathIgnore.getPaths()).permitAll();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         // 禁用 csrf, 由于使用的是JWT，我们这里不需要csrf
         http.csrf().disable().
                 authorizeRequests()
                 // 跨域预检请求
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                // web jars
-                .antMatchers("/webjars/**", "/**/*.html",
-                        "/userLogin", "/captcha.jpg").permitAll()
                 // 其他所有请求需要身份认证
                 .anyRequest().authenticated();
+
         // 退出登录处理器
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {

@@ -41,8 +41,8 @@ public class UploadController {
      * @return
      */
     @PostMapping("/download")
-    public void  download(String url,HttpServletResponse response) throws UnsupportedEncodingException {
-        uploadService.down(url,response);
+    public void download(String url, HttpServletResponse response) throws UnsupportedEncodingException {
+        uploadService.down(url, response);
     }
 
 

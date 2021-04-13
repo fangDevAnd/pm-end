@@ -86,7 +86,6 @@
             <groupId>com.fang.pm.sub</groupId>
             <artifactId>base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
 
         <!--jwt认证-->
@@ -165,11 +164,6 @@
                     </resources>
                 </configuration>
             </plugin>
-
-            <!--
-             tomcat插件
-            -->
-
 
         </plugins>
     </build>
