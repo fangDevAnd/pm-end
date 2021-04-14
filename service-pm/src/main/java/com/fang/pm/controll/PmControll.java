@@ -38,12 +38,6 @@ public class PmControll {
     @Value("${server.port}")
     String port;
 
-    @Autowired
-    public void setIgnore(SecurityPathIgnore ignore) {
-        this.ignore = ignore;
-    }
-
-    private SecurityPathIgnore ignore;
 
     /**
      * 列出当前的项目
@@ -52,8 +46,7 @@ public class PmControll {
      */
     @RequestMapping("/list/dir")
     public Result listProject(HttpServletRequest request) throws Exception {
-        System.out.println(ignore);
-
+        
         File file = new File(projectPath);
 
         if (!file.exists()) {

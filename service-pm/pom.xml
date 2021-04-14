@@ -10,6 +10,7 @@
     <groupId>com.fang.pm.sub</groupId>
     <artifactId>pm</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>pm</name>
     <description>Demo project for Spring Boot</description>
 
@@ -51,7 +52,11 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-
     </dependencies>
+
+    <build>
+        <finalName>pm</finalName>
+    </build>
+
 
 </project>

@@ -24,7 +24,7 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**").allowedHeaders();
     }
-    
+
     /**
      * 添加过滤器
      *
@@ -32,7 +32,7 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-    
+
     }
 
     @Autowired
@@ -41,6 +41,9 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         File file = new File(dependencyCheckProperties.getFileRootPath());
+        if (file.list() == null) {
+            return;
+        }
         //添加文件映射路径为该目录的子目录
         for (String fileName : file.list()) {
             String path = "file://" + new File(file, fileName).getAbsolutePath() + "/";
