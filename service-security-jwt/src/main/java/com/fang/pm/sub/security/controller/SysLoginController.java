@@ -89,12 +89,14 @@ public class SysLoginController {
          * session失效
          *
          */
-        Object kaptcha = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-        if (kaptcha == null) {
-            return new Result().setCode(400).setMsg("验证码已失效");
-        }
-        if (!captcha.equals(kaptcha)) {
-            return new Result().setCode(400).setMsg("验证码不正确");
+        if (captcha != null) {
+            Object kaptcha = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+            if (kaptcha == null) {
+                return new Result().setCode(400).setMsg("验证码已失效");
+            }
+            if (!captcha.equals(kaptcha)) {
+                return new Result().setCode(400).setMsg("验证码不正确");
+            }
         }
         // 用户信息
         SysUser user = userMapper.findByName(username);

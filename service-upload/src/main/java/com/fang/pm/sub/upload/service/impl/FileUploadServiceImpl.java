@@ -7,6 +7,7 @@ import com.fang.pm.sub.upload.config.UploadProperties;
 import com.fang.pm.sub.upload.mapper.UploadFileMapper;
 import com.fang.pm.sub.upload.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,9 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Autowired
     UploadFileMapper uploadFileMapper;
 
+    @Value("${server.servlet.context-path}")
+    private String contentPath;
+
     @Override
     public Result uploadFile(MultipartFile[] files) throws IOException {
         StringBuilder builder = new StringBuilder("");
@@ -38,7 +42,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             File realFile = new File(rootFile, name);
             file.transferTo(realFile);
-            builder.append(uploadProperties.getFileUrl() + name).append(",");
+            builder.append(contentPath + uploadProperties.getFileUrl() + name).append(",");
         }
         String urls = builder.toString();
         Upload upload = new Upload();

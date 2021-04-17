@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.pm.sub.autotest.mapper.TestItemMapper">
+
+    <sql id="base_column">
+        id,autoTestId,descr,innerItems,initCount
+    </sql>
+
+    <sql id="base_filter">
+        <if test="params.id != null">
+            and id = #{params.id}
+        </if>
+        <if test="params.autoTestId != null">
+            and autoTestId = #{params.autoTestId}
+        </if>
+        <if test="params.projectId != null">
+            and projectId = #{params.projectId}
+        </if>
+        <if test="params.descr != null">
+            and descr = #{params.descr}
+        </if>
+        <if test="params.innerItems != null">
+            and innerItems = #{params.innerItems}
+        </if>
+        <if test="params.initCount != null">
+            and initCount = #{params.initCount}
+        </if>
+
+    </sql>
+
+    <select id="count" resultType="int">
+        select count(1) from test_item
+        <where>
+            <if test="params!=null">
+                <include refid="base_filter"></include>
+            </if>
+            <if test="custom!=null">
+                and ${custom}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="list" resultType="com.fang.pm.sub.autotest.bean.TestItem">
+        select
+        <include refid="base_column"/>
+        from test_item
+        <where>
+            <if test="params!=null">
+                <include refid="base_filter"></include>
+            </if>
+            <if test="custom!=null">
+                and ${custom}
+            </if>
+        </where>
+        <if test="sort!=null">
+            order by ${sort}
+        </if>
+        <if test="offset!=null">
+            <if test="limit!=null and limit!=-1">
+                limit #{offset},#{limit}
+            </if>
+        </if>
+
+    </select>
+
+
+    <insert id="insert" parameterType="com.fang.pm.sub.autotest.bean.TestItem">
+        insert into test_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="obj.id != null">
+                id,
+            </if>
+            <if test="obj.autoTestId != null">
+                autoTestId,
+            </if>
+            <if test="obj.descr!= null">
+                descr,
+            </if>
+            <if test="obj.innerItems != null">
+                innerItems,
+            </if>
+            <if test="obj.initCount != null">
+                initCount,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="obj.id  != null">
+                #{params.id}
+            </if>
+            <if test="obj.autoTestId != null">
+                #{obj.autoTestId},
+            </if>
+            <if test="obj.descr != null">
+                #{obj.descr},
+            </if>
+            <if test="obj.innerItems != null">
+                #{obj.innerItems},
+            </if>
+            <if test="obj.initCount != null">
+                #{obj.initCount},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="map">
+        update test_item
+        <set>
+            <if test="obj.id != null">
+                id = #{obj.id},
+            </if>
+            <if test="obj.autoTestId != null">
+                autoTestId = #{obj.autoTestId},
+            </if>
+            <if test="obj.descr != null">
+                descr = #{obj.descr},
+            </if>
+
+            <if test="obj.innerItems != null">
+                innerItems=#{obj.innerItems},
+            </if>
+
+            <if test="obj.initCount != null">
+                initCount=#{obj.initCount},
+            </if>
+
+        </set>
+        <where>
+            <if test="params != null">
+                <include refid="base_filter"/>
+            </if>
+        </where>
+    </update>
+
+
+    <update id="del" parameterType="map">
+        delete from test_item
+        <where>
+            <if test="params != null">
+                <include refid="base_filter"/>
+            </if>
+        </where>
+    </update>
+
+
+
+</mapper>

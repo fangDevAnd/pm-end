@@ -119,13 +119,16 @@
     </dependencies>
 
     <modules>
-        <module>service-cron</module>
-        <module>service-exception</module>
-        <module>service-security-jwt</module>
-        <module>service-upload</module>
-        <module>service-crm</module>
-        <module>service-mail</module>
-        <module>service-pm</module>
+        <module>service-cron</module><!--批处理相关-->
+        <module>service-base</module><!--基础库-->
+        <module>service-exception</module><!--异常处理-->
+        <module>service-security-jwt</module><!--安全校验-->
+        <module>service-upload</module><!--文件上传下载-->
+        <module>service-crm</module><!--crm系统-->
+        <module>service-mail</module><!--邮件服务-->
+        <module>service-pm</module><!--包管理工具-->
+        <module>service-autotest</module><!--自动化测试-->
+        <module>service-baseService</module><!--基础开发服务-->
     </modules>
 
     <build>

@@ -21,7 +21,7 @@ public class UserInfoDao {
     RedisTemplate redisTemplate;
 
 
-    public static final int EXPRES_TIME_MINUTE = 5;
+    public static final int EXPRES_TIME_MINUTE = 60 * 12;
 
     public void saveToken(String token, Authentication sysUser) {
         ValueOperations operations = redisTemplate.opsForValue();

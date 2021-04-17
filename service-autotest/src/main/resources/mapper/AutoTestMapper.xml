@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.pm.sub.autotest.mapper.AutoTestMapper">
+
+    <sql id="base_column">
+        id,name,projectId,type
+    </sql>
+
+    <sql id="base_filter">
+        <if test="params.id != null">
+            and id = #{params.id}
+        </if>
+        <if test="params.name != null">
+            and name = #{params.name}
+        </if>
+        <if test="params.projectId != null">
+            and projectId = #{params.projectId}
+        </if>
+        <if test="params.type != null">
+            and type = #{params.type}
+        </if>
+    </sql>
+
+    <select id="count" resultType="int">
+        select count(1) from test_autotest
+        <where>
+            <if test="params!=null">
+                <include refid="base_filter"></include>
+            </if>
+            <if test="custom!=null">
+                and ${custom}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="list" resultType="com.fang.pm.sub.autotest.bean.AutoTest">
+        select
+        <include refid="base_column"/>
+        from test_autotest
+        <where>
+            <if test="params!=null">
+                <include refid="base_filter"></include>
+            </if>
+            <if test="custom!=null">
+                and ${custom}
+            </if>
+        </where>
+        <if test="sort!=null">
+            order by ${sort}
+        </if>
+        <if test="offset!=null">
+            <if test="limit!=null and limit!=-1">
+                limit #{offset},#{limit}
+            </if>
+        </if>
+
+    </select>
+
+
+    <insert id="insert" parameterType="com.fang.pm.sub.autotest.bean.AutoTest">
+        insert into test_autotest
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="obj.id != null">
+                id,
+            </if>
+            <if test="obj.name != null">
+                name,
+            </if>
+            <if test="obj.projectId!= null">
+                projectId,
+            </if>
+            <if test="obj.type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="obj.id  != null">
+                #{params.id}
+            </if>
+            <if test="obj.name != null">
+                #{obj.name},
+            </if>
+            <if test="obj.projectId != null">
+                #{obj.projectId},
+            </if>
+            <if test="obj.type != null">
+                #{obj.type},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="map">
+        update test_autotest
+        <set>
+            <if test="obj.id != null">
+                id = #{obj.id},
+            </if>
+            <if test="obj.name != null">
+                name = #{obj.name},
+            </if>
+            <if test="obj.projectId != null">
+                projectId = #{obj.projectId},
+            </if>
+
+            <if test="obj.type != null">
+                type=#{obj.type},
+            </if>
+        </set>
+        <where>
+            <if test="params != null">
+                <include refid="base_filter"/>
+            </if>
+        </where>
+    </update>
+
+
+    <update id="del" parameterType="map">
+        delete from test_autotest
+        <where>
+            <if test="params != null">
+                <include refid="base_filter"/>
+            </if>
+        </where>
+    </update>
+
+
+</mapper>

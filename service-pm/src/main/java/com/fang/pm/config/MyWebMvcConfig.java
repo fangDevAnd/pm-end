@@ -38,8 +38,13 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
     @Autowired
     DependencyCheckProperties dependencyCheckProperties;
 
+    @Autowired
+    LintReportProperteis lintReportProperteis;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        //配置依赖检查报告单
         File file = new File(dependencyCheckProperties.getFileRootPath());
         if (file.list() == null) {
             return;
@@ -49,6 +54,24 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
             String path = "file://" + new File(file, fileName).getAbsolutePath() + "/";
             registry.addResourceHandler("/" + fileName + "/*.html")
                     .addResourceLocations(path);
+        }
+
+        //配置lint插件报告单 /HtmlInner?url=/pm/lint/ble/library-zxing/lint-result.html
+        File fileLint = new File(lintReportProperteis.getPath());
+        if (fileLint.list() == null) {
+            return;
+        }
+        for (String fileName : fileLint.list()) {
+            File subFile = new File(file, fileName + lintReportProperteis.getDir()); // var/lib/jenkins/workspace/ble/reports/
+            String[] subList = subFile.list(); //  library-zxing app
+            if (subList == null) {
+                continue;
+            }
+            for (String subFileName : subList) {
+                String path = "file://" + new File(subFile, subFileName).getAbsolutePath() + "/";// var/lib/jenkins/workspace/ble/reports/app/
+                registry.addResourceHandler("/lint/" + fileName + "/" + subFileName + "/*.html")
+                        .addResourceLocations(path);
+            }
         }
     }
 }

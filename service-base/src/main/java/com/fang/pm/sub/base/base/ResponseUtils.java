@@ -66,7 +66,6 @@ public class ResponseUtils {
     public static void responseJson(HttpServletResponse response, HttpServletRequest request, int status, Result info) {
         try {
             setCrosResp(request, response);
-            response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(status);
             response.getWriter().write(new Gson().toJson(info));
