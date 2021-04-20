@@ -4,7 +4,7 @@ package com.fang.pm.sub.base.base.bean;
 /**
  * 基础版本的 分页请求的bean
  */
-public class LimitRequest implements BaseRequest {
+public class LimitRequest extends BaseRequest {
 
     /**
      * 页面
@@ -15,6 +15,7 @@ public class LimitRequest implements BaseRequest {
      * 数量
      */
     private Integer size;
+
 
     public Integer getPage() {
         return page;
@@ -31,6 +32,7 @@ public class LimitRequest implements BaseRequest {
     public void setSize(Integer size) {
         this.size = size;
     }
+
 
     /**
      * 判断是否存在分页

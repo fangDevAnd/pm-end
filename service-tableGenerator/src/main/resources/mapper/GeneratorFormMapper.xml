@@ -83,7 +83,7 @@
     </insert>
 
     <update id="update" parameterType="map">
-        update test_autotest
+        update generator_form
         <set>
             <if test="obj.id != null">
                 id = #{obj.id},

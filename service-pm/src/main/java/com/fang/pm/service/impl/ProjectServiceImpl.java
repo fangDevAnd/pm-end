@@ -2,7 +2,7 @@ package com.fang.pm.service.impl;
 
 import com.fang.pm.dao.ProjectDao;
 import com.fang.pm.entity.request.real.ProjectReqResp;
-import com.fang.pm.entity.resp.LimitResp;
+import com.fang.pm.sub.base.base.bean.LimitResp;
 import com.fang.pm.entity.resp.Result;
 import com.fang.pm.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;

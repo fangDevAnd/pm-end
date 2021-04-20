@@ -1,7 +1,10 @@
 package com.fang.pm.sub.tableGenerator.controller;
 
 import com.fang.pm.sub.base.base.Result;
+import com.fang.pm.sub.base.base.bean.LimitResp;
 import com.fang.pm.sub.base.base.util.ObjMapper;
+import com.fang.pm.sub.service.BaseController;
+import com.fang.pm.sub.service.service.BaseService;
 import com.fang.pm.sub.tableGenerator.bean.GeneratorForm;
 import com.fang.pm.sub.tableGenerator.service.GeneratorFormService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,37 +21,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/generator/form")
-public class FromController {
+public class FromController extends BaseController<Integer, Void, GeneratorForm> {
 
     @Autowired
     GeneratorFormService generatorFormService;
 
-    /**
-     * 列表数据
-     *
-     * @param form
-     * @return
-     */
-    @RequestMapping("/list")
-    public Result list(GeneratorForm form) {
-        HashMap<String, Object> param = ObjMapper.objToMap(form);
-        List<GeneratorForm> formList = generatorFormService.list(
-                param, null, null, null, "id desc");
-        return new Result().setCode(200).setData(formList);
+    @Override
+    protected BaseService<Integer, Void, GeneratorForm> getBaseService() {
+        return generatorFormService;
     }
-
-    /**
-     * 删除
-     *
-     * @param form
-     * @return
-     */
-    @RequestMapping("/del")
-    public Result del(GeneratorForm form) {
-        HashMap<String, Object> param = ObjMapper.objToMap(form);
-        int result = generatorFormService.del(param, null);
-        return new Result().setData(result).setCode(200);
-    }
-
-
 }

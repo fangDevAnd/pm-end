@@ -1,7 +1,10 @@
 package com.fang.pm.sub.tableGenerator.controller;
 
 import com.fang.pm.sub.base.base.Result;
+import com.fang.pm.sub.base.base.bean.LimitResp;
 import com.fang.pm.sub.base.base.util.ObjMapper;
+import com.fang.pm.sub.service.BaseController;
+import com.fang.pm.sub.service.service.BaseService;
 import com.fang.pm.sub.tableGenerator.bean.GeneratorForm;
 import com.fang.pm.sub.tableGenerator.bean.GeneratorRoute;
 import com.fang.pm.sub.tableGenerator.service.GeneratorFormService;
@@ -18,36 +21,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/generator/router")
-public class RouterController {
+public class RouterController extends BaseController<Integer, Void, GeneratorRoute> {
 
     @Autowired
     GeneratorRouteService generatorRouteService;
 
-    /**
-     * 列表数据
-     *
-     * @param route
-     * @return
-     */
-    @RequestMapping("/list")
-    public Result list(GeneratorRoute route) {
-        HashMap<String, Object> param = ObjMapper.objToMap(route);
-        List<GeneratorRoute> formList = generatorRouteService.list(
-                param, null, null, null, "id desc");
-        return new Result().setCode(200).setData(formList);
-    }
-
-    /**
-     * 删除
-     *
-     * @param form
-     * @return
-     */
-    @RequestMapping("/del")
-    public Result del(GeneratorRoute form) {
-        HashMap<String, Object> param = ObjMapper.objToMap(form);
-        int result = generatorRouteService.del(param, null);
-        return new Result().setData(result).setCode(200);
+    @Override
+    protected BaseService<Integer, Void, GeneratorRoute> getBaseService() {
+        return generatorRouteService;
     }
 
 }

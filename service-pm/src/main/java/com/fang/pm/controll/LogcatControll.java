@@ -1,10 +1,9 @@
 package com.fang.pm.controll;
 
 import com.fang.pm.entity.request.real.Logcat;
-import com.fang.pm.entity.resp.LimitResp;
+import com.fang.pm.sub.base.base.bean.LimitResp;
 import com.fang.pm.entity.resp.Result;
 import com.fang.pm.service.LogcatService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
