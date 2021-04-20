@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.pm.sub.tableGenerator.mapper.GeneratorFormMapper">
+
+    <sql id="base_column">
+        id,formVal,desci
+    </sql>
+
+    <sql id="base_filter">
+        <if test="params.id != null">
+            and id = #{params.id}
+        </if>
+        <if test="params.formVal != null">
+            and formVal = #{params.formVal}
+        </if>
+        <if test="params.desci != null">
+            and desci = #{params.desci}
+        </if>
+    </sql>
+
+    <select id="count" resultType="int">
+        select count(1) from generator_form
+        <where>
+            <if test="params!=null">
+                <include refid="base_filter"></include>
+            </if>
+            <if test="custom!=null">
+                and ${custom}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="list" resultType="com.fang.pm.sub.tableGenerator.bean.GeneratorForm">
+        select
+        <include refid="base_column"/>
+        from generator_form
+        <where>
+            <if test="params!=null">
+                <include refid="base_filter"></include>
+            </if>
+            <if test="custom!=null">
+                and ${custom}
+            </if>
+        </where>
+        <if test="sort!=null">
+            order by ${sort}
+        </if>
+        <if test="offset!=null">
+            <if test="limit!=null and limit!=-1">
+                limit #{offset},#{limit}
+            </if>
+        </if>
+
+    </select>
+
+
+    <insert id="insert" parameterType="com.fang.pm.sub.tableGenerator.bean.GeneratorForm">
+        insert into generator_form
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="obj.id != null">
+                id,
+            </if>
+            <if test="obj.formVal != null">
+                formVal,
+            </if>
+            <if test="obj.desci != null">
+                desci,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="obj.id  != null">
+                #{params.id}
+            </if>
+            <if test="obj.formVal != null">
+                #{obj.formVal},
+            </if>
+            <if test="obj.desci != null">
+                #{obj.desci},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="map">
+        update test_autotest
+        <set>
+            <if test="obj.id != null">
+                id = #{obj.id},
+            </if>
+            <if test="obj.formVal != null">
+                formVal = #{obj.formVal},
+            </if>
+            <if test="obj.desci != null">
+                desci = #{obj.desci},
+            </if>
+
+        </set>
+        <where>
+            <if test="params != null">
+                <include refid="base_filter"/>
+            </if>
+        </where>
+    </update>
+
+
+    <update id="del" parameterType="map">
+        delete from test_autotest
+        <where>
+            <if test="params != null">
+                <include refid="base_filter"/>
+            </if>
+        </where>
+    </update>
+
+
+</mapper>

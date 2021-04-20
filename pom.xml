@@ -128,7 +128,8 @@
         <module>service-mail</module><!--邮件服务-->
         <module>service-pm</module><!--包管理工具-->
         <module>service-autotest</module><!--自动化测试-->
-        <module>service-baseService</module><!--基础开发服务-->
+        <module>service-baseService</module>
+        <module>service-tableGenerator</module><!--基础开发服务-->
     </modules>
 
     <build>

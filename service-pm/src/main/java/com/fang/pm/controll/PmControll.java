@@ -38,6 +38,8 @@ public class PmControll {
     @Value("${server.port}")
     String port;
 
+    @Value("${server.servlet.context-path}")
+    String contentPath;
 
     /**
      * 列出当前的项目
@@ -46,13 +48,12 @@ public class PmControll {
      */
     @RequestMapping("/list/dir")
     public Result listProject(HttpServletRequest request) throws Exception {
-        
+
         File file = new File(projectPath);
 
         if (!file.exists()) {
             file.createNewFile();
         }
-
         String[] fileS = file.list();
 
         return new Result(200, "success", fileS, 1);
@@ -84,7 +85,7 @@ public class PmControll {
      */
     @GetMapping(value = "/qrimage")
     public ResponseEntity<byte[]> getQRImage(String url, HttpServletRequest request) throws IOException, WriterException {
-        String urlReal = "http://" + request.getServerName() + ":" + port + "/pm/file/down?path=" + url;
+        String urlReal = "http://" + request.getServerName() + ":" + port + contentPath + "/pm/file/down?path=" + url;
         //二维码内的信息
         byte[] qrcode = null;
         qrcode = QrCodeGenerateService.getQRCodeImage(urlReal, 360, 360);

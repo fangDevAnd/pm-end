@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.pm.sub.tableGenerator.mapper.GeneratorRouterMapper">
+
+    <sql id="base_column">
+        router,formVal,generator
+    </sql>
+
+    <sql id="base_filter">
+        <if test="params.router != null">
+            and router = #{params.router}
+        </if>
+        <if test="params.formVal != null">
+            and formVal = #{params.formVal}
+        </if>
+        <if test="params.generatorCode != null">
+            and generatorCode = #{params.generatorCode}
+        </if>
+    </sql>
+
+    <select id="count" resultType="int">
+        select count(1) from generator_route
+        <where>
+            <if test="params!=null">
+                <include refid="base_filter"></include>
+            </if>
+            <if test="custom!=null">
+                and ${custom}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="list" resultType="com.fang.pm.sub.tableGenerator.bean.GeneratorRoute">
+        select
+        <include refid="base_column"/>
+        from generator_route
+        <where>
+            <if test="params!=null">
+                <include refid="base_filter"></include>
+            </if>
+            <if test="custom!=null">
+                and ${custom}
+            </if>
+        </where>
+        <if test="sort!=null">
+            order by ${sort}
+        </if>
+        <if test="offset!=null">
+            <if test="limit!=null and limit!=-1">
+                limit #{offset},#{limit}
+            </if>
+        </if>
+
+    </select>
+
+
+    <insert id="insert" parameterType="com.fang.pm.sub.tableGenerator.bean.GeneratorRoute">
+        insert into generator_route
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="obj.router != null">
+                router,
+            </if>
+            <if test="obj.formVal != null">
+                formVal,
+            </if>
+            <if test="obj.generatorCode != null">
+                generatorCode,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="obj.router  != null">
+                #{params.router}
+            </if>
+            <if test="obj.formVal != null">
+                #{obj.formVal},
+            </if>
+            <if test="obj.generatorCode != null">
+                #{obj.generatorCode},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="map">
+        update generator_route
+        <set>
+            <if test="obj.router != null">
+                router = #{obj.router},
+            </if>
+            <if test="obj.formVal != null">
+                formVal = #{obj.formVal},
+            </if>
+            <if test="obj.generatorCode != null">
+                generatorCode = #{obj.generatorCode},
+            </if>
+        </set>
+        <where>
+            <if test="params != null">
+                <include refid="base_filter"/>
+            </if>
+        </where>
+    </update>
+
+
+    <update id="del" parameterType="map">
+        delete from generator_route
+        <where>
+            <if test="params != null">
+                <include refid="base_filter"/>
+            </if>
+        </where>
+    </update>
+
+
+</mapper>

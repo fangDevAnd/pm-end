@@ -1,14 +1,10 @@
 package com.fang.pm.sub.autotest.controller;
 
 import com.fang.pm.sub.autotest.bean.AutoTest;
-import com.fang.pm.sub.autotest.bean.TestItem;
-import com.fang.pm.sub.autotest.bean.TestProject;
 import com.fang.pm.sub.autotest.service.AutoTestService;
 import com.fang.pm.sub.base.base.Result;
-import com.fang.pm.sub.base.base.util.MapGenerator;
 import com.fang.pm.sub.base.base.util.ObjMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

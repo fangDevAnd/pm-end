@@ -59,12 +59,14 @@
             <if test="brand != null">
                 and brand=#{brand}
             </if>
-            <if test="startTime!=null">
-                and createTime >= #{startTime}
+            <if test="createTime_start!=null">
+                and createTime >= #{createTime_start}
             </if>
-            <if test="endTime!=null">
-                and createTime &lt;= #{endTime}
+            <if test="createTime_end!=null">
+                and createTime &lt;= #{createTime_end}
             </if>
+
+
         </where>
     </sql>
 

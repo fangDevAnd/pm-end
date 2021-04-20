@@ -1,11 +1,9 @@
-package com.fang.pm.entity.request;
+package com.fang.pm.sub.base.base.bean;
 
-import lombok.Data;
 
 /**
  * 基础版本的 分页请求的bean
  */
-@Data
 public class LimitRequest implements BaseRequest {
 
     /**
@@ -18,6 +16,21 @@ public class LimitRequest implements BaseRequest {
      */
     private Integer size;
 
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
 
     /**
      * 判断是否存在分页

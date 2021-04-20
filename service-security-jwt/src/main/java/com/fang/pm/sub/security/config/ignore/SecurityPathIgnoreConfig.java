@@ -20,7 +20,7 @@ public class SecurityPathIgnoreConfig {
 
     @Bean
     public SecurityPathIgnore pmSecurityPathIgnore() {
-        return new SecurityPathIgnore("/pm/qrimage", "/pm/file/down");
+        return new SecurityPathIgnore("/pm/qrimage", "/pm/file/down","/logcat/add");
     }
 
 

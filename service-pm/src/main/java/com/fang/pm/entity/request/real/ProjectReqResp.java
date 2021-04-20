@@ -1,6 +1,6 @@
 package com.fang.pm.entity.request.real;
 
-import com.fang.pm.entity.request.LimitRequest;
+import com.fang.pm.sub.base.base.bean.LimitRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 

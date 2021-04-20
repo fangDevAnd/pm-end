@@ -1,9 +1,6 @@
 package com.fang.pm.entity.request.real;
 
-import com.fang.pm.entity.request.LimitRequest;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
+import com.fang.pm.sub.base.base.bean.LimitRequest;
 
 public class Logcat extends LimitRequest {
 
@@ -19,24 +16,8 @@ public class Logcat extends LimitRequest {
     private String brand;
 
     //查询参数
-    private String startTime;
-    private String endTime;
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
+    private String createTime_start;
+    private String createTime_end;
 
     public String getPhone() {
         return phone;
